@@ -1,0 +1,42 @@
+show dbs
+use assignment11
+db.records.insertMany([
+{
+rollno: 31124,
+branch: "COMP",
+marks: 100
+},
+{
+rollno: 31125,
+branch: "COMP",
+marks: 80
+},
+{
+rollno: 31126,
+branch: "COMP",
+marks: 90
+},
+{
+rollno: 31127,
+branch: "IT",
+marks: 40
+},
+{
+rollno: 31128,
+branch: "IT",
+marks: 80
+},
+{
+rollno: 31129,
+branch: "EnTC",marks: 120
+}
+])
+db.records.drop()
+//map: maps a value with a key and emits a key-value pair
+//reduce: reduces or groups all the documents having the same key
+var map = function(){emit(this.branch, this.marks)};
+var reduce = function(branch,marks){return Array.sum(marks);};
+db.records.mapReduce(map,reduce,{out :"newCollection"});
+db.newCollection.find().pretty()
+db.records.find().pretty()
+db.dropDatabase()

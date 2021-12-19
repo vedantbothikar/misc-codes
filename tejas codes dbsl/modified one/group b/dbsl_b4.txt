@@ -1,0 +1,145 @@
+from pymongo import MongoClient
+
+
+client = MongoClient("mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb")
+db = client['assignment12']
+collection=db['customers']
+
+
+def create():                # insert document
+    global collection
+    id = input("Enter id: ")
+    name = input("Enter name: ")
+    new_customer = {
+        "id": id,
+        "name": name,
+    }
+    collection.insert_one(new_customer)
+
+def read():                  # get all records
+    global collection
+    response = collection.find()
+    for record in response:
+        print(record)
+
+def update():                # update a record
+    global collection
+    id = input("Enter id: ")
+    name = input("Enter name: ")
+    prev_record = {'id': id}
+    new_record = {
+        "id": id,
+        "name":name,
+    }
+    response = collection.update_one(prev_record, {'$set': new_record})
+
+def delete():               # delete the record
+    global collection
+    id = input("Enter id: ")
+    record = {'id': id}
+    response = collection.delete_one(record)
+
+
+while True:
+    option = int(input("Choose your operation?\n1) Create \n2) Read \n3) Update \n4) Delete \n5) Exit\n"))
+    if option==1:
+        create()
+        print("Insert operation successful.\n")
+    if option==2:
+        read()
+        print("Read operation successful.\n")
+    if option==3:
+        update()
+        print("Update operation successful.\n")
+    if option==4:
+        delete()
+        print("Delete soperation successful.\n")
+    if option==5:
+        break
+client.close()
+
+
+'''
+Choose your operation?
+1) Create
+2) Read
+3) Update
+4) Delete
+5) Exit
+1
+Enter id: 100
+Enter name: satyam
+Insert operation successful.
+
+Choose your operation?      
+1) Create 
+2) Read 
+3) Update
+4) Delete
+5) Exit
+1
+Enter id: 200
+Enter name: Omkar
+Insert operation successful.
+
+Choose your operation?
+1) Create
+2) Read
+3) Update
+4) Delete
+5) Exit
+2
+{'_id': ObjectId('619e42a234e46a20f3e5038e'), 'id': '100', 'name': 'satyam'}
+{'_id': ObjectId('619e42af34e46a20f3e5038f'), 'id': '200', 'name': 'Omkar'}
+Read operation successful.
+
+Choose your operation?
+1) Create
+2) Read
+3) Update
+4) Delete
+5) Exit
+3
+Enter id: 100
+Enter name: Pralhad
+Update operation successful.
+
+Choose your operation?
+1) Create
+2) Read
+3) Update
+4) Delete
+5) Exit
+2
+{'_id': ObjectId('619e42a234e46a20f3e5038e'), 'id': '100', 'name': 'Pralhad'}
+{'_id': ObjectId('619e42af34e46a20f3e5038f'), 'id': '200', 'name': 'Omkar'}
+Read operation successful.
+
+Choose your operation?
+1) Create
+2) Read
+3) Update
+4) Delete
+5) Exit
+4
+Enter id: 100
+Delete soperation successful.
+
+Choose your operation?
+1) Create
+2) Read
+3) Update
+4) Delete
+5) Exit
+2
+{'_id': ObjectId('619e42af34e46a20f3e5038f'), 'id': '200', 'name': 'Omkar'}
+Read operation successful.
+
+Choose your operation?
+1) Create
+2) Read
+3) Update
+4) Delete
+5) Exit
+5
+'''

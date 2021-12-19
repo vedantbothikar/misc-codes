@@ -1,0 +1,80 @@
+mysql> CREATE DATABASE Assig5;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use Assig5;
+Database changed
+
+mysql> create table Stud_Marks(name varchar(20) not null, total_marks int not null) ;
+Query OK, 0 rows affected (0.09 sec)
+
+
+mysql> create table Result(Roll int not null auto_increment, Name varchar(20) not null, class varchar(20) not null, primary key(Roll));
+Query OK, 0 rows affected (0.09 sec)
+
+
+mysql> show tables;
++------------------+
+| Tables_in_Assig5 |
++------------------+
+| Result           |
+| Stud_Marks       |
++------------------+
+
+mysql> describe Result;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| Roll  | int         | NO   | PRI | NULL    | auto_increment |
+| Name  | varchar(20) | NO   |     | NULL    |                |
+| class | varchar(20) | NO   |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+
+mysql> describe Stud_Marks;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| name        | varchar(20) | NO   |     | NULL    |       |
+| total_marks | int         | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> insert into Stud_Marks values
+    ->      ('a',900),('b',1500),('c',1000),('d',989),('e',990),('f',980),('g',825),('h',899);
+Query OK, 8 rows affected (0.02 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select * from Stud_Marks;
++------+-------------+
+| name | total_marks |
++------+-------------+
+| a    |         900 |
+| b    |        1500 |
+| c    |        1000 |
+| d    |         989 |
+| e    |         990 |
+| f    |         980 |
+| g    |         825 |
+| h    |         899 |
++------+-------------+
+8 rows in set (0.00 sec)
+
+
+mysql> delimiter //
+mysql> create procedure proc_Grade(IN sname varchar(20)) 
+         begin 
+          declare marks int; 
+         select total_marks into marks from Stud_Marks where name=sname; 
+          if (marks>=990 and marks<=1500) then
+               insert into Result values(sname,'Distinction');
+          elseif (marks>=900 and marks<=989) then
+          insert into Result values(sname,'First');
+          else
+         insert into Result values(sname,'Higher Second');
+          end if;
+          end //
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> delimiter ;
+
+
