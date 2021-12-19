@@ -1,0 +1,247 @@
+// Write a program to implement MySQL/Oracle database connectivity with any front end 
+// language to implement Database navigation operations
+
+// package explorer: Alt + Shift + Q, P
+// to include jar file: right click on project -> build path -> configure
+
+/*
+ * STEPS FOR JDBC CONNECTION
+ * 1) import java.sql
+ * 2) load and register the driver
+ * 3) Create connection
+ * 4) create statement
+ * 5) execute the query
+ * 6) process the result
+ * 7) close
+ * */
+
+import java.sql.*;
+import java.util.*;
+
+public class MainClass {
+	public static void main(String[] args) throws Exception
+	{
+		String url = "jdbc:mysql://localhost:3306/jdbc";
+		String uname = "root";
+		String password = "omgpict123";
+		
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");	 //Required to work with JDBC
+		Connection connection = DriverManager.getConnection(url, uname, password);  //
+		Statement statement = connection.createStatement(); 		 //return obj of statement
+		
+		
+		Scanner scanner = new Scanner(System.in);
+		int choice, id;
+		boolean flag = true;
+		String name, address;
+
+
+		while (flag){
+			System.out.println("MENU");
+			System.out.println("1) Create table");
+			System.out.println("2) Insert data in the table");
+			System.out.println("3) Delete the data");
+			System.out.println("4) Update the data");
+			System.out.println("5) Display the data");
+			System.out.println("6) Exit");
+			
+			System.out.print("\nEnter your choice: ");
+			choice = scanner.nextInt();
+
+			switch(choice){
+				case 1:
+					try {
+						statement.executeUpdate("CREATE TABLE Info" +
+						"(id INTEGER PRIMARY KEY, " +
+						"name VARCHAR(30), "+
+						"address varchar(50))");	
+						
+						System.out.println("Table Created successfully!!!\n");
+					} catch (SQLException e){
+						System.out.println("Error: " + e);
+					}
+					break;
+				case 2:
+					System.out.println("\nEnter the data to be inserted");
+					System.out.print("Enter id: ");
+					id = scanner.nextInt();
+					scanner.nextLine();
+					System.out.print("Enter name: ");
+					name = scanner.nextLine();
+					System.out.print("Enter address: ");
+					address = scanner.nextLine();
+
+					try{
+						statement.executeUpdate("INSERT INTO Info(id, name, address) VALUES(" + 
+												id + ",'" + name + "','" + address + "')");
+						System.out.println("Inserted data into the table!!!\n");
+					}  catch (SQLException e){
+						System.out.println("Error: " + e);
+					}
+					break;
+				case 3:
+					System.out.println("\nEnter the id of the entry to be deleted");
+					System.out.print("Enter id: ");
+					id = scanner.nextInt();
+					try {
+						statement.executeUpdate("DELETE FROM INFO WHERE id ="+id);
+						System.out.println("Data with id "+ id + "deleted sucessfully!!!\n");
+					}  catch (SQLException e){
+						System.out.println("Error: " + e);
+					}
+					break;
+				case 4:
+					System.out.println("\nEnter the id of the data to be updated");
+					System.out.print("Enter the id: ");
+					id = scanner.nextInt();
+					scanner.nextLine();
+					System.out.print("Enter new name: ");
+					name = scanner.nextLine();
+					System.out.print("Enter new address: ");
+					address = scanner.nextLine();
+
+					try {
+						statement.executeUpdate("UPDATE INFO SET name='"+name+"', address='"+address+"' WHERE id="+id);
+						System.out.println("Data with id " + id + " updated sucessfully!!!\n");
+					} 
+					catch (SQLException e){
+						System.out.println("Error: " + e);
+					}
+					break;
+				case 5:
+					System.out.println("\t\tINFO TABLE");
+					System.out.println("id\t\tName\t\tAddress");
+					ResultSet response = statement.executeQuery("SELECT * FROM INFO");
+					while (response.next()) {
+						id = response.getInt("id");
+						name = response.getString("name");
+						address = response.getString("address");
+						System.out.println(id+"\t\t"+name+"\t\t"+address);
+					}
+					System.out.println("\n");
+					break;
+				case 6:
+					flag = false;
+					System.out.println("GoodBye!!!");
+					scanner.close();
+					break;
+			}
+		}	
+		
+		
+		statement.close();
+		connection.close();
+	}
+}
+
+/*
+MENU
+1) Create table
+2) Insert data in the table
+3) Delete the data
+4) Update the data
+5) Display the data
+6) Exit
+
+Enter your choice: 1
+Table Created successfully!!!
+
+MENU
+1) Create table
+2) Insert data in the table
+3) Delete the data
+4) Update the data
+5) Display the data
+6) Exit
+
+Enter your choice: 2
+
+Enter the data to be inserted
+Enter id: 31126
+Enter name: Omkar
+Enter address: Saundana
+Inserted data into the table!!!
+
+MENU
+1) Create table
+2) Insert data in the table
+3) Delete the data
+4) Update the data
+5) Display the data
+6) Exit
+
+Enter your choice: 5
+		INFO TABLE
+id		Name		Address
+31126		Omkar		Saundana
+
+
+MENU
+1) Create table
+2) Insert data in the table
+3) Delete the data
+4) Update the data
+5) Display the data
+6) Exit
+
+Enter your choice: 4
+
+Enter the id of the data to be updated
+Enter the id: 31126
+Enter new name: Omkar Gaikwad
+Enter new address: Pune
+Data with id: 31126updated sucessfully!!!
+
+MENU
+1) Create table
+2) Insert data in the table
+3) Delete the data
+4) Update the data
+5) Display the data
+6) Exit
+
+Enter your choice: 5
+		INFO TABLE
+id		Name		Address
+31126		Omkar Gaikwad		Pune
+
+
+MENU
+1) Create table
+2) Insert data in the table
+3) Delete the data
+4) Update the data
+5) Display the data
+6) Exit
+
+Enter your choice: 3
+
+Enter the id of the entry to be deleted
+Enter id: 31126
+Data with id 31126deleted sucessfully!!!
+
+MENU
+1) Create table
+2) Insert data in the table
+3) Delete the data
+4) Update the data
+5) Display the data
+6) Exit
+
+Enter your choice: 5
+		INFO TABLE
+id		Name		Address
+
+
+MENU
+1) Create table
+2) Insert data in the table
+3) Delete the data
+4) Update the data
+5) Display the data
+6) Exit
+
+Enter your choice: 6
+GoodBye!!!
+*/

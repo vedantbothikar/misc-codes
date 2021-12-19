@@ -1,0 +1,49 @@
+show dbs
+use assignment11
+db
+
+db.materials.insertMany([
+{
+name:'aluminium',
+rate:200,
+weight:'Light'
+},
+{
+name:'steel, mild',
+rate:300,
+weight:'Medium'
+},
+{
+name:'steel, stainless',
+rate:100,
+weight:'Heavy'
+},
+{
+name:'abs plastic',
+rate:100,
+weight:'Light'
+},
+{
+name:'PVC',
+rate:200,
+weight:'Light'
+}
+])
+
+db.materials.find().pretty()
+
+db.materials.mapReduce(
+function(){
+emit(this.name,this.rate);},
+function(key, value){
+return Array.sum(value)},
+{
+query:{weight:'Light'},
+out:'total_cost'
+}
+)
+
+
+db.total_cost.find().pretty()
+
+

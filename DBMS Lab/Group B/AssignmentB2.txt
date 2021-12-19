@@ -1,0 +1,52 @@
+> use assignmentB2
+switched to db assignmentB2
+> db.products.insertMany([{product:"SchezwanRice",price:120,customer:"Aarkin"},{product:"PaneerButterMasala",price:220,customer:"Rohan"}])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("619b16b119dc845fabf67cc0"),
+                ObjectId("619b16b119dc845fabf67cc1")
+        ]
+}
+> db.products.insertMany([{product:"Samosa",price:20,customer:"Anish"},{product:"Pizza",price:50,customer:"Dheeraj"},{product:"Samosa",price:20,customer:"Omkar"}])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("619b173c19dc845fabf67cc2"),
+                ObjectId("619b173c19dc845fabf67cc3"),
+                ObjectId("619b173c19dc845fabf67cc4")
+        ]
+}
+> db.products.count({product:"Samosa"})
+2
+> db.products.distinct("product")
+[ "PaneerButterMasala", "Pizza", "Samosa", "SchezwanRice" ]
+> db.products.aggregate([{$match:{}},{$group:{_id:"$customer",total:{$sum:"$price"}}}])
+{ "_id" : "Aarkin", "total" : 120 }
+{ "_id" : "Anish", "total" : 20 }
+{ "_id" : "Omkar", "total" : 20 }
+{ "_id" : "Rohan", "total" : 220 }
+{ "_id" : "Dheeraj", "total" : 50 }
+> db.products.aggregate([{$match:{}},{$group:{_id:"$product",total:{$sum:"$price"}}}])
+{ "_id" : "Pizza", "total" : 50 }
+{ "_id" : "PaneerButterMasala", "total" : 220 }
+{ "_id" : "Samosa", "total" : 40 }
+{ "_id" : "SchezwanRice", "total" : 120 }
+> db.products.aggregate([{$match:{}},{$group:{_id:"$product",total:{$sum:"$price"}}},{$sort:{total:-1}}])
+{ "_id" : "PaneerButterMasala", "total" : 220 }
+{ "_id" : "SchezwanRice", "total" : 120 }
+{ "_id" : "Pizza", "total" : 50 }
+{ "_id" : "Samosa", "total" : 40 }
+> db.products.aggregate([{$match:{product:"Samosa"}},{$group:{_id:"$product",total:{$sum:"$price"}}}])
+{ "_id" : "Samosa", "total" : 40 }
+> db.products.createIndex({customer:1})
+{
+        "numIndexesBefore" : 1,
+        "numIndexesAfter" : 2,
+        "createdCollectionAutomatically" : false,
+        "ok" : 1
+}
+> db.products.find({customer:"Aarkin"})
+{ "_id" : ObjectId("619b16b119dc845fabf67cc0"), "product" : "SchezwanRice", "price" : 120, "customer" : "Aarkin" }
+> db.products.dropIndex({customer:1})
+{ "nIndexesWas" : 2, "ok" : 1 }

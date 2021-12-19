@@ -1,0 +1,71 @@
+> use assignmentB1
+switched to db assignmentB1
+> db.createCollection("three")
+{ "ok" : 1 }
+> show collections
+one
+
+> db.three.insertOne({name:"Aarkin",rollno:40,div:"TE 1"})
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("6188b652603ada1aaaba415d")
+}
+> db.three.insertMany([{name:"Aniket",rollno:25,div:"TE 1"},{name:"Omkar",rollno:26,div:"TE 2"},{name:"Rahul",rollno:2,div:"TE 3"}])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("6188b836603ada1aaaba415e"),
+                ObjectId("6188b836603ada1aaaba415f")
+ ]
+}
+> db.three.find().pretty()
+{
+        "_id" : ObjectId("6191dc2a6ba705bb7ddf3d90"),
+        "name" : "Aarkin",
+        "rollno" : 40,
+        "div" : "TE 1"
+}
+{
+        "_id" : ObjectId("6191dc3a6ba705bb7ddf3d91"),
+        "name" : "Aniket",
+        "rollno" : 25,
+        "div" : "TE 1"
+}
+{
+        "_id" : ObjectId("6191dc3a6ba705bb7ddf3d92"),
+        "name" : "Omkar",
+        "rollno" : 26,
+        "div" : "TE 2"
+}
+{
+        "_id" : ObjectId("6191dc3a6ba705bb7ddf3d93"),
+        "name" : "Rahul",
+        "rollno" : 2,
+        "div" : "TE 3"
+}
+> db.three.find({div:"TE 1"},{_id:0,name:1}).pretty()
+{ "name" : "Rupesh" }
+{ "name" : "Aniket" }
+> db.three.update({name:"Omkar"},{$set:{div:"TE 1"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.three.deleteMany({div:"TE 3"})
+{ "acknowledged" : true, "deletedCount" : 1 }
+> show collections
+collection
+one
+three
+two
+> db.collection.deleteMany({})
+{ "acknowledged" : true, "deletedCount" : 1 }
+> show collections
+collection
+one
+three
+two
+> db.collection.drop()
+true
+> show collections
+one
+three
+two
+>

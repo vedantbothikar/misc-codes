@@ -1,0 +1,43 @@
+> use assignment11
+switched to db assignment11
+> db.records.insertMany ([
+..{
+...rollno: 31124,
+... branch: "COMP"
+... marks: 100
+},
+{
+...rollno: 31125,
+...branch: "COMP"
+...marks: 80
+...},
+{
+...rollno: 31126,
+...branch: "COMP"
+...marks: 90
+},
+{
+...rollno: 31127,
+...branch: "IT",
+...marks: 40,
+},
+{
+...rollno: 31128,
+... branch: "IT",
+...marks: 80,
+},
+{
+...rollno: 31140,
+...branch: "ENTC",
+...marks: 120,
+}
+])
+
+>var map = function(){emit(this.branch, this.marks)};
+>var reduce = function(branch,marks){return Array.sum(marks);};
+>db.records.mapReduce(map,reduce,{out: "newCollection"});
+{"result": "newCollection", "ok" : 1}
+>db.newCollection.find().pretty()
+{"_id": "COMP", "value" : 270}
+{"_id": "IT", "value" : 120}
+{"_id": "ENTC", "value" : 120}
