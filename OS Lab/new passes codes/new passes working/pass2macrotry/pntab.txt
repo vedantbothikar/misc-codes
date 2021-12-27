@@ -1,0 +1,2 @@
+INCR:	X	Y	REG	
+DECR:	A	B	REG	

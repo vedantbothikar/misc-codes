@@ -1,0 +1,2 @@
+module pass2macrotry {
+}
