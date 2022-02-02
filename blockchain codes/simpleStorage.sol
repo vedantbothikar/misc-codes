@@ -22,7 +22,7 @@ contract simpleStorage {
 
     function retrieve() public view returns (uint256) {
         return favNum;
-    }
+    } 
 
     function addPerson (string memory myName, uint256 myFavNum) public {
         people.push(People(myFavNum, myName));
