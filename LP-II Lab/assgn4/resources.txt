@@ -1,0 +1,3 @@
+https://www.geeksforgeeks.org/n-queen-problem-using-branch-and-bound/
+
+https://www.geeksforgeeks.org/n-queen-problem-backtracking-3/
