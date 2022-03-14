@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE employees [
+    <!ELEMENT employees (employee)>
+    <!ELEMENT employee (fname,lname,email) >
+    <!ELEMENT fname (#PCDATA)>
+    <!ELEMENT lname (#PCDATA)>
+    <!ELEMENT email (#PCDATA)>
+]>
+
+<?xml-stylesheet type="text/css" href="styles.css"?>
+
+<employees>
+
+    <employee>
+        <Header>FirstName</Header>
+        <Header>LastName</Header>
+        <Header>Email</Header>
+    </employee>
+    
+    <employee>
+        <fname>Vedant</fname>
+        <lname>Bothikar</lname>
+        <email>vedant@gmail.com</email>
+    </employee>
+
+    <employee>
+        <fname>Rahul</fname>
+        <lname>Sharma</lname>
+        <email>rahul@gmail.com</email>
+    </employee>
+
+    <employee>
+        <fname>Akash</fname>
+        <lname>Gupta</lname>
+        <email>akash@gmail.com</email>      
+    </employee>
+</employees>

@@ -1,0 +1,10 @@
+
+employee{
+    display: table-row;
+}
+fname,lname,email,Header{
+    text-align: center;
+    padding: 5px;
+    display: table-cell;
+    border: 1px solid;
+}
