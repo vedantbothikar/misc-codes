@@ -1,0 +1,8 @@
+*Good resources for learning how to code for A* algorithm and solving N-Puzzle*
+
+https://blog.goodaudience.com/solving-8-puzzle-using-a-algorithm-7b509c331288
+
+https://www.geeksforgeeks.org/8-puzzle-problem-using-branch-and-bound/
+
+
+-------------------------------------------------------------------
