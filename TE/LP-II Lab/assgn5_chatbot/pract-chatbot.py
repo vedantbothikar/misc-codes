@@ -1,27 +1,19 @@
 from nltk.chat.util import Chat, reflections
 
 pairs = [
-
     [
-        r'what is your name?',
-        ['My name is chatbot, my name is chatty']
+        r'(.*) name?',
+        ['Hi my name is Chatty']
     ],
     [
-        r'what is your age?',
-        ['It has been 2 years since my development']
-    ],
-    [
-        r'(.*) created you?',
-        ['Vedant created me. Thanks to him']
+        r'(.*) your age?',
+        ['Hi my age is 2 years']
     ]
-
 ]
 
-
 def chatty():
-    print('chat with me: ')
+    print('type lowercase-')
     chat = Chat(pairs, reflections)
     chat.converse()
-
 
 chatty()
