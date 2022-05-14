@@ -8,6 +8,14 @@ void swap(int *xp, int *yp)
 	*yp = temp;
 }
 
+void printArray(int arr[], int size)
+{
+	int i;
+	for (i=0; i < size; i++)
+		cout << arr[i] << " ";
+	cout << endl;
+}
+
 void selectionSort(int arr[], int n)
 {
 	int i, j, min_idx;
@@ -26,13 +34,7 @@ void selectionSort(int arr[], int n)
 	}
 }
 
-void printArray(int arr[], int size)
-{
-	int i;
-	for (i=0; i < size; i++)
-		cout << arr[i] << " ";
-	cout << endl;
-}
+
 
 int main()
 {
